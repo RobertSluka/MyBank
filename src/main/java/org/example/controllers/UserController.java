@@ -1,8 +1,10 @@
 package org.example.controllers;
 
 import org.example.dto.UserDTO;
+import org.example.entity.PaymentInfo;
 import org.example.entity.User;
 import org.example.entity.UserInfoMapper;
+import org.example.repository.UserRepo;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +14,22 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserInfoMapper userInfoMapper;
+     UserInfoMapper userInfoMapper;
 
     @Autowired
-    private UserService service;
+     UserService service;
+
+
 
     @PostMapping("/save")
-    public User saveNewUser(@RequestBody UserDTO dto) {
-        return service.saveNewUser(userInfoMapper.toEntity(dto));
+    public User saveNewUser(@RequestBody User user) {
+        return service.saveNewUser(user);
     }
+
 
     @PostMapping("/retrievalEUR")
     public String performTransaction(@RequestBody User user, @RequestParam double amount) {

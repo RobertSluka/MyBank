@@ -3,7 +3,9 @@ package org.example.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import okhttp3.*;
+import org.example.entity.PaymentInfo;
 import org.example.entity.User;
+import org.example.repository.PaymentInfoRepo;
 import org.example.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,21 +16,25 @@ import java.io.IOException;
 @ApplicationScope
 @Component
 public class UserService {
-
-
-    private final UserRepo repository;
     @Autowired
-    public UserService(UserRepo repository){
-        this.repository = repository;
+    PaymentInfo paymentInfo;
+    @Autowired
+    PaymentInfoRepo repo;
 
-    }
+    @Autowired
+    UserRepo repository;
+
     public User saveNewUser(User user){
         return repository.save(user);
     }
 
+    public PaymentInfo saveNewPayment(PaymentInfo paymentInfo){
+        return repo.save(paymentInfo);
+    }
+
 
     public boolean checkBalanceEUR(User userInfo, double amount){
-        User user = repository.findById(userInfo.getId()).orElse(null);
+        User user = repository.findById(Long.valueOf(userInfo.getId())).orElse(null);
         if (user != null){
             double balance = user.getAccountStatus();
 
@@ -37,7 +43,7 @@ public class UserService {
         return false;
     }
     public boolean checkBalanceBTC(User userInfo, double amount){
-        User user = repository.findById(userInfo.getId()).orElse(null);
+        User user = repository.findById(Long.valueOf(userInfo.getId())).orElse(null);
         if (user != null){
             double balance = user.getAccountStatus();
 
@@ -47,7 +53,7 @@ public class UserService {
     }
     public void performTransaction(User userInfo, double amount) {
         // Update the user's balance in the database
-        User user = repository.findById(userInfo.getId()).orElse(null);
+        User user = repository.findById(Long.valueOf(userInfo.getId())).orElse(null);
         if (user != null) {
             double balance = user.getAccountStatus();
             user.setAccountStatus(balance - amount);
@@ -56,7 +62,7 @@ public class UserService {
     }
     public void performTransactionBTC(User userInfo, double amount) {
         // Update the user's balance in the database
-        User user = repository.findById(userInfo.getId()).orElse(null);
+        User user = repository.findById(Long.valueOf(userInfo.getId())).orElse(null);
         if (user != null) {
             double balance = user.getBTCAmount();
             user.setAccountStatus(balance - amount);

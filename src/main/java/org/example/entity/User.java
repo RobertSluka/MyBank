@@ -10,19 +10,29 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "USER_INFO")
+@Table(name = "user_info")
 @Getter
 @Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "userid", nullable = false)
+    private Integer id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "accountNumber")
     private Integer accountNumber;
+
+    @Column(name = "accountStatus")
     private Double accountStatus;
-    private Long BTCAmount;
+
+    @Column(name = "BTCAmount")
+    private Double BTCAmount;
 
 
 }
