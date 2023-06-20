@@ -18,10 +18,10 @@ import java.io.IOException;
 public class UserController {
 
     @Autowired
-     UserInfoMapper userInfoMapper;
+    UserInfoMapper userInfoMapper;
 
     @Autowired
-     UserService service;
+    UserService service;
 
 
 
@@ -31,29 +31,29 @@ public class UserController {
     }
 
 
-    @PostMapping("/retrievalEUR")
-    public String performTransaction(@RequestBody User user, @RequestParam double amount) {
-        if (service.checkBalanceEUR(user, amount)) {
-            service.performTransaction(user, amount);
-            return "Transaction successful";
-        } else {
-            return "Insufficient balance";
-        }
-
-    }
-    @RequestMapping("/retrievalBtc")
-    public String BTCRetrieval(@RequestBody User user, @RequestParam double amount){
-        if (service.checkBalanceBTC(user, amount)) {
-            service.performTransaction(user, amount);
-            return "Transaction successful";
-        } else {
-            return "Insufficient balance";
-        }
-    }
+//    @PostMapping("/retrievalEUR")
+//    public String performTransaction(@RequestBody User user, @RequestParam double amount) {
+//        if (service.checkBalanceEUR(user, amount)) {
+//            service.performTransaction(user, amount);
+//            return "Transaction successful";
+//        } else {
+//            return "Insufficient balance";
+//        }
+//
+//    }
+//    @RequestMapping("/retrievalBtc")
+//    public String BTCRetrieval(@RequestBody User user, @RequestParam double amount){
+//        if (service.checkBalanceBTC(user, amount)) {
+//            service.performTransaction(user, amount);
+//            return "Transaction successful";
+//        } else {
+//            return "Insufficient balance";
+//        }
+//    }
     @RequestMapping("/currentValueBtc")
-    public String currentValueBTC(@RequestBody User user, @RequestParam double amount) throws IOException {
-        String currentValueOfBTC = service.getCurrentValueOfBTC();
-            return "The current value of the BTC is: " + currentValueOfBTC;
+    public String currentValueBTC() throws IOException {
+        return service.getCurrentValueOfBTC();
+
 
     }
 }
